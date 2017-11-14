@@ -50,6 +50,7 @@ class Upload < ApplicationRecord
       if md5_post && replaced_post
         raise "duplicate: #{md5_post.id}" if replaced_post != md5_post
       elsif md5_post
+	merge_tags(md5_post)
         raise "duplicate: #{md5_post.id}"
       end
     end
@@ -198,6 +199,11 @@ class Upload < ApplicationRecord
           p.is_pending = true
         end
       end
+    end
+
+    def merge_tags(post)
+      post.tag_string += " #{tag_string}"
+      post.save
     end
 
     def notify_cropper(post)
