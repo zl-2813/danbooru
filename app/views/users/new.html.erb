@@ -14,8 +14,6 @@
         <%= f.input :email, :required => false, :as => :email %>
         <%= f.input :password %>
         <%= f.input :password_confirmation %>
-
-        <%= invisible_recaptcha_tags callback: 'submitInvisibleRecaptchaForm', text: 'Sign up' %>
       <% end %>
     </div>
   </div>

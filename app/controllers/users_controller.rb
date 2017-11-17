@@ -44,17 +44,12 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user], :as => CurrentUser.role)
     @user.last_ip_addr = request.remote_ip
-    if verify_recaptcha(model: @user)
-      @user.save
-      if @user.errors.empty?
-        session[:user_id] = @user.id
-      end
-      set_current_user
-      respond_with(@user)
-    else
-      flash[:notice] = "Sign up failed"
-      redirect_to new_user_path
+    @user.save
+    if @user.errors.empty?
+      session[:user_id] = @user.id
     end
+    set_current_user
+    respond_with(@user)
   end
 
   def update
